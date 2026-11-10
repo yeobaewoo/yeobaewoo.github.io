@@ -12,172 +12,193 @@
 <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <style>
   :root{
-    --bg:#fffbe8; --card:#ffffff; --ink:#1c1a1f; --sub:#6f6a73; --line:#ece6d6;
-    --brand:#f0468f; --brand-ink:#ffffff; --brand-soft:#ffe6f1; --yellow:#ffd714; --purple:#7a3ff2;
-    --ok:#2f9e6e; --err:#d6336c;
-    --muted:#9a949e; --yellow-soft:#fff7cc; --bar:#f0468f; --track:#f5efe2;
-    --good:#2f9e6e; --good-soft:#e3f6ec; --info:#3b6fd9; --info-soft:#e6eefc;
-    --warn:#b7791f; --warn-soft:#fdf1d8; --bad:#d6336c; --bad-soft:#fde4ec;
+    --bg:#fffbe8; --card:#ffffff; --ink:#1c1a1f; --sub:#6f6a73; --muted:#9a949e; --line:#ece6d6;
+    --brand:#f0468f; --brand-ink:#ffffff; --brand-soft:#ffe6f1; --yellow:#ffd714; --yellow-soft:#fff7cc;
+    --ok:#2f9e6e; --err:#d6336c; --bar:#f0468f; --track:#f5efe2;
+    --good:#2f9e6e; --good-soft:#e3f6ec; --bad:#d6336c; --bad-soft:#fde4ec;
     --radius:18px;
   }
   *{box-sizing:border-box}
   html,body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
-    -webkit-text-size-adjust:100%}
-  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px}
-  .hero{text-align:center;padding:12px 0 8px}
-  .hero .logo{width:200px;max-width:60%;height:auto;border-radius:16px;box-shadow:0 6px 0 var(--ink);border:2px solid var(--ink)}
-  .hero h1{font-size:22px;margin:8px 0 4px;letter-spacing:-.3px}
-  .hero p{margin:0;color:var(--sub);font-size:14px;line-height:1.5}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:20px 18px;margin-top:16px;box-shadow:0 4px 18px rgba(120,80,60,.06)}
+    font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;-webkit-text-size-adjust:100%}
   .hidden{display:none!important}
+  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px;position:relative}
+  body.admin-mode .wrap{max-width:1100px}
+
+  /* ---------- 공통 ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--yellow);border-radius:var(--radius);
+    padding:20px 18px;margin-top:16px;box-shadow:0 4px 18px rgba(120,80,60,.06)}
   h2{font-size:17px;margin:0 0 4px}
-  .q{margin-top:22px}
-  .q:first-child{margin-top:0}
-  .q-title{font-weight:700;font-size:16px;margin-bottom:4px}
-  .q-title .num{color:var(--brand);margin-right:4px}
-  .q-hint{color:var(--sub);font-size:13px;margin-bottom:10px}
-  .req{color:var(--err);font-size:12px;margin-left:4px;font-weight:600}
-  .opts{display:flex;flex-direction:column;gap:8px}
-  .opts.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .opt{position:relative}
-  .opt input{position:absolute;opacity:0;pointer-events:none}
-  .opt span{display:block;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;
-    background:#fff;font-size:15px;cursor:pointer;transition:all .12s;line-height:1.35}
-  .opts.grid .opt span{text-align:center;padding:12px 4px}
-  .opt input:checked + span{border-color:var(--brand);background:var(--brand-soft);font-weight:700}
-  .opt input:focus-visible + span{outline:2px solid var(--brand);outline-offset:2px}
-  .sub{margin-top:10px;padding:12px;border-radius:12px;background:#fff7cc}
-  .sub .q-hint{margin-bottom:8px}
-  input[type=text],textarea,.pin{width:100%;font:inherit;font-size:16px;padding:12px 14px;
-    border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
-  input[type=text]:focus,textarea:focus,.pin:focus{outline:none;border-color:var(--brand)}
-  textarea{min-height:96px;resize:vertical}
-  .pin{text-align:center;font-size:30px;letter-spacing:14px;padding:14px 0 14px 14px;font-weight:700}
-  .btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font:inherit;
-    font-size:17px;font-weight:700;background:var(--brand);color:var(--brand-ink);cursor:pointer;margin-top:16px}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-size:17px;font-weight:700;
+    background:var(--brand);color:var(--brand-ink);cursor:pointer;margin-top:16px}
   .btn:disabled{opacity:.5;cursor:default}
   .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
   .row{display:flex;gap:10px}
   .row .btn{margin-top:12px}
   .msg{margin-top:12px;font-size:14px;text-align:center;min-height:20px}
   .msg.err{color:var(--err)} .msg.ok{color:var(--ok)}
-  .who{font-size:24px;font-weight:800;text-align:center;margin:8px 0}
   .center{text-align:center}
   .muted{color:var(--sub);font-size:13px}
-  .notice{font-size:13px;color:var(--sub);background:#fff7cc;border-radius:12px;padding:10px 12px;margin-top:14px;line-height:1.5}
-  .done-img{display:block;width:150px;height:auto;margin:0 auto}
+  input[type=text],input[type=number],textarea,select,.pin{width:100%;font:inherit;font-size:16px;padding:12px 14px;
+    border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand)}
+  textarea{min-height:96px;resize:vertical}
+
+  /* ---------- 회원 화면 ---------- */
+  .hero{text-align:center;padding:12px 0 8px}
+  body.has-admin .hero{padding-top:44px}
+  .hero .logo{width:200px;max-width:60%;height:auto;border-radius:16px;box-shadow:0 6px 0 var(--ink);border:2px solid var(--ink)}
+  .hero h1{font-size:22px;margin:8px 0 4px;letter-spacing:-.3px}
   .hero h1 .hl{background:linear-gradient(transparent 60%,var(--yellow) 60%);padding:0 2px}
-  .q-title .num{color:var(--brand)}
-  .card{border-top:5px solid var(--yellow)}
-  .foot{text-align:center;color:var(--sub);font-size:12px;margin-top:24px}
-  .shake{animation:sh .3s}
-  .once{font-size:13px;color:var(--err);text-align:center;margin-top:18px;font-weight:600}
+  .hero p{margin:0;color:var(--sub);font-size:14px;line-height:1.5;white-space:pre-line}
+  .closed-box{margin-top:16px;padding:14px 16px;border-radius:14px;background:#f1eef3;color:var(--ink);text-align:center;line-height:1.5;font-size:14px}
+  .closed-box b{display:block;font-size:16px;margin-bottom:2px}
+  .pin{text-align:center;font-size:30px;letter-spacing:14px;padding:14px 0 14px 14px;font-weight:700}
+  .who{font-size:24px;font-weight:800;text-align:center;margin:8px 0}
   .already{margin-top:14px;padding:16px;border-radius:14px;background:var(--brand-soft);text-align:center;line-height:1.55}
   .already b{display:block;font-size:17px;margin-bottom:4px}
+  .q{margin-top:24px}
+  .q:first-child{margin-top:0}
+  .q-title{font-weight:700;font-size:16px;margin-bottom:4px;line-height:1.4}
+  .q-title .num{color:var(--brand);margin-right:4px}
+  .q-hint{color:var(--sub);font-size:13px;margin-bottom:10px}
+  .q-hint.flash{color:var(--err);font-weight:700}
+  .req{color:var(--err);font-size:12px;margin-left:4px;font-weight:600}
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opts.grid{display:grid;grid-template-columns:repeat(3,1fr)}
+  .opt{position:relative}
+  .opt input{position:absolute;opacity:0;pointer-events:none}
+  .opt span{display:block;padding:13px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-size:15px;
+    cursor:pointer;transition:all .12s;line-height:1.35}
+  .opts.grid .opt span{text-align:center;padding:12px 4px}
+  .opt input:checked + span{border-color:var(--brand);background:var(--brand-soft);font-weight:700}
+  .opt input:focus-visible + span{outline:2px solid var(--brand);outline-offset:2px}
+  .sub{margin-top:10px;padding:12px;border-radius:12px;background:var(--yellow-soft)}
+  .sub .q-hint{margin-bottom:8px}
+  .once{font-size:13px;color:var(--err);text-align:center;margin-top:22px;font-weight:600}
+  .done-img{display:block;width:150px;height:auto;margin:0 auto}
+  .foot{text-align:center;color:var(--sub);font-size:12px;margin-top:24px}
+  .shake{animation:sh .3s}
+  @keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .admin-link{position:absolute;top:14px;right:16px;z-index:10;border:2px solid var(--ink);background:var(--yellow);color:var(--ink);
+    font:inherit;font-size:13px;font-weight:800;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
+  .admin-link:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
+  body.admin-mode .hero, body.admin-mode .foot-main, body.admin-mode #closedBox{display:none}
+
   .modal{position:fixed;inset:0;background:rgba(28,26,31,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
   .modal .box{background:#fff;border-radius:18px;padding:22px 18px 16px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.2)}
   .modal h3{margin:0 0 8px;font-size:18px}
   .modal p{margin:0;color:var(--sub);font-size:14px;line-height:1.55}
-  @keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-  #adminView .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 4px 16px rgba(120,80,60,.05)}
-  #adminView .btn{border:0;border-radius:12px;padding:12px 16px;font:inherit;font-size:15px;font-weight:700;background:var(--brand);color:#fff;cursor:pointer}
-  #adminView .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
-  #adminView .btn.sm{padding:8px 12px;font-size:13px}
-  #adminView .btn:disabled{opacity:.5;cursor:default}
-  #adminView .top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .modal input[type=password]{margin-top:14px;text-align:center;font-size:18px}
+
+  /* ---------- 운영진 화면 ---------- */
+  #adminView .card{padding:18px;margin-top:0;border-top-width:1px}
+  #adminView .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
   #adminView .top .logo{width:72px;height:auto;border-radius:10px;border:2px solid var(--ink)}
   #adminView .top h1{font-size:19px;margin:0}
-  #adminView .top .who{font-size:13px;color:var(--sub)}
-  #adminView .top .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-  #adminView .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  #adminView .stat .label{font-size:13px;color:var(--sub)}
-  #adminView .stat .value{font-size:28px;font-weight:800;margin-top:2px;letter-spacing:-.5px}
-  #adminView .stat .value small{font-size:15px;color:var(--sub);font-weight:600}
-  #adminView .progress{height:8px;background:var(--track);border-radius:4px;margin-top:10px;overflow:hidden}
-  #adminView .progress i{display:block;height:100%;background:var(--bar);border-radius:4px}
-  #adminView .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px}
-  #adminView .summary h3{font-size:15px;margin:0 0 10px}
-  #adminView .bars{display:flex;flex-direction:column;gap:9px}
-  #adminView .bar-row{display:grid;grid-template-columns:9.5em 1fr 72px;align-items:center;gap:8px;font-size:13px}
-  #adminView .bar-row .k{color:var(--ink);line-height:1.3}
-  #adminView .bar-row .t{height:12px;background:var(--track);border-radius:4px;position:relative}
-  #adminView .bar-row .t i{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 4px 4px 0}
-  #adminView .bar-row .v{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
-  #adminView .bar-row .v b{color:var(--ink)}
-  #adminView .subhead{font-size:12px;color:var(--muted);margin:12px 0 6px}
-  #adminView .filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:22px 0 10px;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5}
-  #adminView .chip-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
-  #adminView .chip-btn[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700}
-  #adminView .chip-btn .n{opacity:.7;margin-left:4px}
-  #adminView .filters
-
-  /* 회원 카드 */
-  .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
-  #adminView .member{padding:16px}
-  #adminView .m-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  #adminView .m-name{font-size:17px;font-weight:800}
-  #adminView .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--yellow);color:var(--ink)}
-  #adminView .status{margin-left:auto;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
-  #adminView .status.done{background:var(--good-soft);color:var(--good)}
-  #adminView .status.none{background:#f1eef3;color:var(--sub)}
-  #adminView .m-meta{font-size:13px;color:var(--sub);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
-  #adminView .m-meta a{color:var(--sub)}
-  #adminView .ans{margin-top:12px;display:grid;grid-template-columns:64px 1fr;gap:8px 10px;font-size:14px;align-items:start}
-  #adminView .ans dt{color:var(--muted);font-size:12px;padding-top:3px}
-  #adminView .ans dd{margin:0;line-height:1.45}
-  #adminView .pill{display:inline-block;font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px}
-  #adminView .pill.good{background:var(--good-soft);color:var(--good)}
-  #adminView .pill.info{background:var(--info-soft);color:var(--info)}
-  #adminView .pill.warn{background:var(--warn-soft);color:var(--warn)}
-  #adminView .pill.bad{background:var(--bad-soft);color:var(--bad)}
-  #adminView .tag{display:inline-block;font-size:12px;padding:3px 8px;border-radius:8px;background:var(--brand-soft);color:#a3195b;margin:0 4px 4px 0}
-  #adminView .keep{color:var(--sub)}
-  #adminView .change{font-weight:700}
-  #adminView .change em{font-style:normal;font-weight:600;background:var(--yellow-soft);padding:1px 6px;border-radius:6px;margin-left:4px}
-  #adminView .quote{background:#faf7f0;border-left:3px solid var(--yellow);padding:8px 10px;border-radius:0 8px 8px 0;white-space:pre-wrap;word-break:break-word;font-size:13.5px}
-  #adminView .empty{color:var(--muted);font-size:14px;margin-top:10px}
-  #adminView .reset{margin-top:12px;background:none;border:0;color:var(--muted);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:4px 0}
-  #adminView .none-list{color:var(--muted);text-align:center;padding:30px 0}
-  #adminView .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:24px}
-  @media (max-width:640px){
-  #adminView .stats{grid-template-columns:1fr 1fr}
-  #adminView .stats .stat:first-child{grid-column:1 / -1}
-  #adminView .filters
-    .list{grid-template-columns:1fr}
-  }
-  #adminView .btn{display:inline-block;width:auto;margin-top:0}
-  #adminView .filters input{width:auto;flex:1;min-width:140px}
-  body.admin-mode .wrap{max-width:1100px}
-  body.has-admin .hero{padding-top:44px}
-  #adminView .icon-btn{margin-left:auto;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--ink);
+  #adminView .top .sub-who{font-size:13px;color:var(--sub)}
+  .icon-btn{margin-left:auto;width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--ink);
     display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
-  #adminView .icon-btn:disabled svg{animation:spin .8s linear infinite}
+  .icon-btn:disabled svg{animation:spin .8s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
-  #adminView .top{flex-wrap:nowrap}
-  #adminView .tab{font-size:14px;padding:11px 4px}
-  #adminView .qlist{display:flex;flex-direction:column;gap:10px}
-  #adminView .qitem h3{font-size:15px;margin:0 0 8px;line-height:1.4}
-  #adminView .qitem h3 .num{color:var(--brand);margin-right:4px}
-  #adminView .qitem .meta{font-size:12px;color:var(--muted);margin:-4px 0 8px}
-  #adminView .qitem ul{margin:0;padding-left:18px;font-size:14px;line-height:1.7;color:var(--ink)}
-  #adminView .qitem .follow{margin-top:6px;font-size:13px;color:var(--sub)}
-  #adminView input[type=search]{font:inherit;font-size:14px;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
-  #adminView .bar-row .v small{color:var(--muted);font-size:11px}
-  #adminView .tabs{display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:12px;position:sticky;top:6px;z-index:6}
-  #adminView .tab{flex:1;border:0;background:none;border-radius:10px;padding:11px 8px;font:inherit;font-size:15px;font-weight:700;color:var(--sub);cursor:pointer}
-  #adminView .tab[aria-selected=true]{background:var(--ink);color:#fff}
-  #adminView .tab .n{opacity:.7;font-weight:600}
-  #adminView #tabPeople .filters{margin-top:0;top:62px}
-  #adminView .summary{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-  body.admin-mode .hero, body.admin-mode .foot-main{display:none}
-  .wrap{position:relative}
-  .admin-link{position:absolute;top:14px;right:16px;z-index:10;border:2px solid var(--ink);background:var(--yellow);color:var(--ink);
-    font:inherit;font-size:13px;font-weight:800;padding:7px 12px;border-radius:999px;cursor:pointer;box-shadow:0 3px 0 var(--ink)}
-  .admin-link:active{transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
-  .modal input[type=password]{margin-top:14px;text-align:center}
-  .modal .msg{margin-top:8px}
+  .tabs{display:flex;gap:6px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:5px;margin-bottom:12px;position:sticky;top:6px;z-index:6}
+  .tab{flex:1;border:0;background:none;border-radius:10px;padding:11px 4px;font:inherit;font-size:14px;font-weight:700;color:var(--sub);cursor:pointer}
+  .tab[aria-selected=true]{background:var(--ink);color:#fff}
+  .tab .n{opacity:.7;font-weight:600}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .stat .label{font-size:13px;color:var(--sub)}
+  .stat .value{font-size:28px;font-weight:800;margin-top:2px;letter-spacing:-.5px}
+  .stat .value small{font-size:15px;color:var(--sub);font-weight:600}
+  .progress{height:8px;background:var(--track);border-radius:4px;margin-top:10px;overflow:hidden}
+  .progress i{display:block;height:100%;background:var(--bar);border-radius:4px}
+  .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin-top:10px}
+  .summary h3{font-size:15px;margin:0 0 10px;line-height:1.4}
+  .summary h3 .num{color:var(--brand);margin-right:4px}
+  .bars{display:flex;flex-direction:column;gap:9px}
+  .bar-row{display:grid;grid-template-columns:9.5em 1fr 72px;align-items:center;gap:8px;font-size:13px}
+  .bar-row .k{line-height:1.3;word-break:keep-all}
+  .bar-row .t{height:12px;background:var(--track);border-radius:4px;position:relative}
+  .bar-row .t i{position:absolute;left:0;top:0;bottom:0;background:var(--bar);border-radius:0 4px 4px 0}
+  .bar-row .v{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums}
+  .bar-row .v b{color:var(--ink)}
+  .bar-row .v small{color:var(--muted);font-size:11px}
+  .subhead{font-size:12px;color:var(--muted);margin:14px 0 6px}
+  .texts{display:flex;flex-direction:column;gap:6px}
+  .quote{background:#faf7f0;border-left:3px solid var(--yellow);padding:8px 10px;border-radius:0 8px 8px 0;white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.45}
+  .quote .by{display:block;font-size:11px;color:var(--muted);margin-bottom:2px}
+  .empty{color:var(--muted);font-size:14px}
+  .filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;position:sticky;top:62px;background:var(--bg);padding:6px 0;z-index:5}
+  .chip-btn{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+  .chip-btn[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700}
+  .chip-btn .n{opacity:.7;margin-left:4px}
+  .filters input{flex:1;min-width:140px;font:inherit;font-size:14px;padding:9px 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff}
+  .list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+  .m-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .m-name{font-size:17px;font-weight:800}
+  .badge{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--yellow);color:var(--ink)}
+  .status{margin-left:auto;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px}
+  .status.done{background:var(--good-soft);color:var(--good)}
+  .status.none{background:#f1eef3;color:var(--sub)}
+  .m-meta{font-size:13px;color:var(--sub);margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
+  .m-meta a{color:var(--sub)}
+  .ans{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .ans-q{font-size:12px;color:var(--muted);margin-bottom:3px}
+  .ans-a{font-size:14px;line-height:1.45}
+  .tag{display:inline-block;font-size:12.5px;padding:3px 8px;border-radius:8px;background:var(--brand-soft);color:#a3195b;margin:0 4px 4px 0}
+  .tag.f{background:var(--yellow-soft);color:var(--ink)}
+  .dash{color:var(--muted)}
+  .reset{margin-top:12px;background:none;border:0;color:var(--muted);font:inherit;font-size:12px;text-decoration:underline;cursor:pointer;padding:4px 0}
+  .none-list{color:var(--muted);text-align:center;padding:30px 0}
+  .a-foot{color:var(--muted);font-size:12px;text-align:center;margin-top:24px}
+
+  /* ---------- 질문 편집 ---------- */
+  .ed-status{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .ed-status .state{font-weight:800;font-size:16px}
+  .ed-status .state.on{color:var(--good)} .ed-status .state.off{color:var(--bad)}
+  .ed-status .btn{width:auto;margin:0 0 0 auto;padding:10px 16px;font-size:14px}
+  .ed-label{display:block;font-size:13px;font-weight:700;color:var(--sub);margin:14px 0 6px}
+  .ed-help{font-size:12px;color:var(--muted);margin:10px 2px 0;line-height:1.5}
+  .ed-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  #adminView .ed-q{padding:0;overflow:hidden}
+  .ed-head{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;background:#fff;border:0;width:100%;font:inherit;text-align:left;color:var(--ink)}
+  .ed-head .num{color:var(--brand);font-weight:800;flex:none}
+  .ed-head .ttl{flex:1;font-weight:700;font-size:15px;line-height:1.35;word-break:keep-all}
+  .ed-head .ttl.ph{color:var(--muted);font-weight:500}
+  .ed-head .meta{font-size:11px;color:var(--sub);background:#f4f1ea;border-radius:999px;padding:3px 8px;flex:none}
+  .ed-head .chev{flex:none;color:var(--muted);transition:transform .15s}
+  .ed-q.open .ed-head .chev{transform:rotate(180deg)}
+  .ed-body{padding:4px 16px 16px;border-top:1px dashed var(--line)}
+  .ed-row{display:flex;gap:8px;align-items:center}
+  .ed-row > *{min-width:0}
+  .ed-check{display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;flex:none}
+  .ed-check input{width:18px;height:18px;accent-color:var(--brand)}
+  .ed-opts{display:flex;flex-direction:column;gap:6px}
+  .ed-opt{display:flex;gap:4px;align-items:center}
+  .ed-opt input[type=text]{padding:10px 12px;font-size:15px}
+  .mini{flex:none;width:34px;height:38px;border:1.5px solid var(--line);background:#fff;border-radius:10px;font:inherit;font-size:14px;cursor:pointer;color:var(--sub);padding:0}
+  .mini.del{color:var(--bad)}
+  .mini:disabled{opacity:.35;cursor:default}
+  .ex{flex:none;font-size:11px;color:var(--sub);display:flex;align-items:center;gap:3px;cursor:pointer;white-space:nowrap}
+  .add-line{margin-top:8px;border:1.5px dashed var(--line);background:#fff;border-radius:10px;padding:10px;width:100%;font:inherit;font-size:14px;color:var(--sub);cursor:pointer}
+  .ed-box{margin-top:14px;padding:12px;border-radius:12px;background:var(--yellow-soft)}
+  .whens{display:flex;flex-wrap:wrap;gap:6px}
+  .whens label{display:flex;align-items:center;gap:4px;font-size:13px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
+  .ed-actions{display:flex;gap:6px;margin-top:16px;align-items:center}
+  .ed-actions .mini{width:auto;padding:0 12px}
+  .ed-actions .mini.del{margin-left:auto}
+  .savebar{position:sticky;bottom:10px;margin-top:14px;display:flex;gap:8px;padding:10px;background:#fff;border:1px solid var(--line);
+    border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);z-index:7;align-items:center}
+  .savebar .btn{margin:0;padding:12px;font-size:15px}
+  .savebar .btn.ghost{flex:0 0 30%}
+  .savebar .state{font-size:12px;color:var(--sub);flex:none}
+  .ed-msg{font-size:13px;text-align:center;min-height:18px;margin-top:8px}
+
+  @media (max-width:640px){
+    .stats{grid-template-columns:1fr 1fr}
+    .stats .stat:first-child{grid-column:1 / -1}
+    .list{grid-template-columns:1fr}
+    .summary{grid-template-columns:1fr}
+  }
 </style>
 </head>
 <body>
@@ -187,10 +208,12 @@
   <header class="hero">
     <img class="logo" src="logo.png" alt="여배우 Badminton crew 로고" width="240" height="176">
     <h1><span class="hl">여배우</span> 의견 설문</h1>
-    <p>이 설문은 여배우의 더 나은 운영을 위해<br>진행되는 의견 청취이니,<br>편하고 솔직하게 답변해 주세요 🏸</p>
+    <p id="intro"></p>
   </header>
 
-  <!-- 1단계: 로그인 -->
+  <div class="closed-box hidden" id="closedBox" role="status"><b>지금은 설문이 마감됐어요</b>참여해 주신 모든 분께 감사드려요 🙏</div>
+
+  <!-- 1. 로그인 -->
   <section class="card" id="stepLogin">
     <h2>본인 확인</h2>
     <p class="muted">휴대폰 번호 <b>뒤 4자리</b>를 입력해 주세요.</p>
@@ -200,7 +223,7 @@
     <div class="already hidden" id="alreadyBox" role="status"><b>이미 설문을 제출하셨어요 🙏</b>참여해 주셔서 감사합니다.<br>설문은 한 번만 제출할 수 있어요.</div>
   </section>
 
-  <!-- 2단계: 본인 맞는지 -->
+  <!-- 2. 본인 확인 -->
   <section class="card hidden" id="stepConfirm">
     <p class="center muted">이 분이 맞으세요?</p>
     <div class="who" id="whoName"></div>
@@ -210,82 +233,28 @@
     </div>
   </section>
 
-  <!-- 3단계: 설문 -->
+  <!-- 3. 설문 -->
   <form class="card hidden" id="stepSurvey" novalidate>
-    <div class="q" data-q="continue">
-      <div class="q-title"><span class="num">1.</span>앞으로도 여배우에서 계속 활동하실 건가요?<span class="req">필수</span></div>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="continue" value="계속 활동"><span>💪 활동할게요</span></label>
-        <label class="opt"><input type="radio" name="continue" value="고민 중"><span>🤔 고민 중이에요</span></label>
-        <label class="opt"><input type="radio" name="continue" value="쉬고 싶음"><span>😌 쉬고 싶어요</span></label>
-      </div>
-    </div>
-
-    <div class="q" data-q="regrets">
-      <div class="q-title"><span class="num">2.</span>모임에서 아쉬웠던 점은 무엇인가요?</div>
-      <div class="q-hint"><b id="regretCount">최대 3개</b>까지 고를 수 있어요</div>
-      <div class="opts">
-        <label class="opt"><input type="checkbox" name="regrets" value="게임 구성·대진"><span>게임 구성·대진 방식</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="게임 수 부족·대기 시간"><span>게임 수가 적거나 대기 시간이 길어요</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="실력 차이"><span>실력 차이가 커요</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="모임 요일·시간"><span>모임 요일·시간이 안 맞아요</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="모임 장소"><span>모임 장소가 멀거나 불편해요</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="분위기·친목"><span>분위기·친목이 아쉬워요</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="운영·소통"><span>운영 방식·공지·소통</span></label>
-        <label class="opt"><input type="checkbox" name="regrets" value="없음"><span>특별히 없어요</span></label>
-      </div>
-      <div class="sub">
-        <div class="q-hint">구체적으로 적어주시면 큰 도움이 돼요 (선택)</div>
-        <textarea name="regret_detail" maxlength="1000" placeholder="예) 같은 사람과 자주 게임해서 아쉬워요"></textarea>
-      </div>
-    </div>
-
-    <div class="q" data-q="day">
-      <div class="q-title"><span class="num">3.</span>모임 요일(현재 <b>수요일</b>)은 어떠세요?<span class="req">필수</span></div>
-      <div class="opts">
-        <label class="opt"><input type="radio" name="day" value="유지"><span>수요일 그대로 좋아요</span></label>
-        <label class="opt"><input type="radio" name="day" value="변경 희망"><span>다른 요일이 좋겠어요</span></label>
-        <label class="opt"><input type="radio" name="day" value="상관없음"><span>상관없어요</span></label>
-      </div>
-      <div class="sub hidden" data-show-if="day=변경 희망">
-        <div class="q-hint">원하는 요일을 골라주세요 (여러 개 가능)</div>
-        <div class="opts grid">
-          <label class="opt"><input type="checkbox" name="day_wish" value="월"><span>월</span></label>
-          <label class="opt"><input type="checkbox" name="day_wish" value="화"><span>화</span></label>
-          <label class="opt"><input type="checkbox" name="day_wish" value="목"><span>목</span></label>
-          <label class="opt"><input type="checkbox" name="day_wish" value="금"><span>금</span></label>
-          <label class="opt"><input type="checkbox" name="day_wish" value="토"><span>토</span></label>
-          <label class="opt"><input type="checkbox" name="day_wish" value="일"><span>일</span></label>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="q" data-q="comment">
-      <div class="q-title"><span class="num">4.</span>운영진에게 하고 싶은 말이 있다면?</div>
-      <textarea name="comment" maxlength="2000" placeholder="자유롭게 적어주세요 (선택)"></textarea>
-    </div>
-
+    <div id="qArea"></div>
     <p class="once">⚠️ 한 번 제출하면 수정하거나 다시 제출할 수 없어요.</p>
     <button class="btn" type="submit" id="btnSubmit" style="margin-top:8px">제출하기</button>
     <div class="msg" id="submitMsg" role="status"></div>
   </form>
 
-  <!-- 4단계: 완료 -->
+  <!-- 4. 완료 -->
   <section class="card hidden" id="stepDone">
     <img class="done-img" src="player.png" alt="여배우 유니폼을 입고 스매시하는 선수 일러스트" width="358" height="751">
     <h2 class="center" style="margin-top:8px"><span id="doneName"></span>님, 고맙습니다!</h2>
-    <p class="center muted">소중한 의견 잘 받았어요.<br>모임이 더 즐거워지도록 운영진이 꼼꼼히 살펴볼게요.</p>
+    <p class="center muted" id="doneText">소중한 의견 잘 받았어요.<br>모임이 더 즐거워지도록 운영진이 꼼꼼히 살펴볼게요.</p>
   </section>
 
-  <!-- 운영진 결과 -->
+  <!-- 운영진 -->
   <section id="adminView" class="hidden">
     <div class="top">
       <img class="logo" src="logo.png" alt="" width="240" height="176">
       <div>
         <h1>설문 결과</h1>
-        <div class="who" id="who"></div>
+        <div class="sub-who" id="who"></div>
       </div>
       <button class="icon-btn" id="btnRefresh" type="button" aria-label="새로고침" title="새로고침">
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
@@ -299,65 +268,74 @@
     </div>
 
     <div id="tabAll" role="tabpanel">
-    <div class="stats">
-      <div class="card stat">
-        <div class="label">응답률</div>
-        <div class="value" id="sRate"></div>
-        <div class="progress"><i id="sBar"></i></div>
+      <div class="stats">
+        <div class="card stat"><div class="label">응답률</div><div class="value" id="sRate"></div><div class="progress"><i id="sBar"></i></div></div>
+        <div class="card stat"><div class="label">응답 완료</div><div class="value" id="sDone"></div></div>
+        <div class="card stat"><div class="label">아직 미응답</div><div class="value" id="sNone"></div></div>
       </div>
-      <div class="card stat">
-        <div class="label">응답 완료</div>
-        <div class="value" id="sDone"></div>
-      </div>
-      <div class="card stat">
-        <div class="label">아직 미응답</div>
-        <div class="value" id="sNone"></div>
-      </div>
+      <div class="summary" id="summary"></div>
     </div>
-
-    <div class="summary" id="summary"></div>
-    </div>
-
-    <div id="tabQuestions" role="tabpanel" class="hidden"></div>
 
     <div id="tabPeople" role="tabpanel" class="hidden">
-
-    <div class="filters" role="group" aria-label="목록 필터">
-      <button class="chip-btn" data-f="all" aria-pressed="true">전체<span class="n" id="nAll"></span></button>
-      <button class="chip-btn" data-f="done" aria-pressed="false">응답<span class="n" id="nDone"></span></button>
-      <button class="chip-btn" data-f="none" aria-pressed="false">미응답<span class="n" id="nNone"></span></button>
-      <input id="search" type="search" placeholder="이름 검색" aria-label="이름 검색">
+      <div class="filters" role="group" aria-label="목록 필터">
+        <button class="chip-btn" data-f="all" aria-pressed="true">전체<span class="n" id="nAll"></span></button>
+        <button class="chip-btn" data-f="done" aria-pressed="false">응답<span class="n" id="nDone"></span></button>
+        <button class="chip-btn" data-f="none" aria-pressed="false">미응답<span class="n" id="nNone"></span></button>
+        <input id="search" type="search" placeholder="이름 검색" aria-label="이름 검색">
+      </div>
+      <div class="list" id="list"></div>
     </div>
 
-    <div class="list" id="list"></div>
+    <div id="tabQuestions" role="tabpanel" class="hidden">
+      <div class="card">
+        <div class="ed-status">
+          <div>
+            <div class="muted">설문 상태</div>
+            <div class="state" id="edState"></div>
+          </div>
+          <button class="btn ghost" type="button" id="btnToggleOpen"></button>
+        </div>
+        <label class="ed-label" for="edIntro">첫 화면 안내 문구</label>
+        <textarea id="edIntro" rows="3" maxlength="500"></textarea>
+      </div>
+      <p class="ed-help">질문을 누르면 펼쳐서 수정할 수 있어요. 다 고친 뒤 아래 <b>저장하기</b>를 눌러야 회원 화면에 반영돼요.<br>이미 응답이 있는 상태에서 보기를 지우면, 결과에는 "(삭제된 보기)"로 남아요.</p>
+      <div class="ed-list" id="edList"></div>
+      <button class="add-line" type="button" data-act="addQ">＋ 질문 추가</button>
+      <div class="savebar">
+        <span class="state" id="edDirty">변경 없음</span>
+        <button class="btn ghost" type="button" data-act="revert" id="btnRevert" disabled>되돌리기</button>
+        <button class="btn" type="button" data-act="save" id="btnSave" disabled>저장하기</button>
+      </div>
+      <div class="ed-msg" id="edMsg" role="status"></div>
     </div>
-    <p class="foot" id="foot"></p>
+
+    <p class="a-foot" id="aFoot"></p>
   </section>
 
   <p class="foot foot-main">여배우 · 여자들의 배드민턴 우정모임</p>
+
+  <div class="modal hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
+    <div class="box">
+      <h3 id="cmTitle"></h3>
+      <p id="cmText"></p>
+      <div class="row">
+        <button class="btn ghost" type="button" id="cmCancel">취소</button>
+        <button class="btn" type="button" id="cmOk">확인</button>
+      </div>
+    </div>
+  </div>
 
   <div class="modal hidden" id="pwModal" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
     <form class="box" id="pwForm">
       <h3 id="pwTitle">운영진 확인</h3>
       <p>운영진 비밀번호를 입력해 주세요.</p>
-      <input type="password" id="adminPw" class="pin" style="font-size:18px;letter-spacing:2px;padding:12px" autocomplete="current-password" placeholder="비밀번호">
+      <input type="password" id="adminPw" class="pin" autocomplete="current-password" placeholder="비밀번호" style="letter-spacing:2px;padding:12px">
       <div class="msg" id="pwMsg" role="status"></div>
       <div class="row">
         <button class="btn ghost" type="button" id="pwCancel">취소</button>
         <button class="btn" type="submit" id="pwOk">들어가기</button>
       </div>
     </form>
-  </div>
-
-  <div class="modal hidden" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="cmTitle">
-    <div class="box">
-      <h3 id="cmTitle">이대로 제출할까요?</h3>
-      <p>한 번 제출하면 <b>수정하거나 다시 제출할 수 없어요.</b><br>답변을 한 번 더 확인해 주세요.</p>
-      <div class="row">
-        <button class="btn ghost" type="button" id="cmCancel">다시 볼게요</button>
-        <button class="btn" type="button" id="cmOk">제출하기</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -367,15 +345,12 @@
   const SUPABASE_KEY = "sb_publishable_s0FE6yCSD1T6CVILlEwJ1A__4veMI5d";
   const SURVEY_ID = "2026-11";
 
-  const $ = (id) => document.getElementById(id);
-  const steps = ["stepLogin", "stepConfirm", "stepSurvey", "stepDone"];
-  const form = $("stepSurvey");
-  let pin = "", member = null, adminPin = null, lastStep = "stepLogin";
-
-  function show(step) {
-    steps.forEach(s => $(s).classList.toggle("hidden", s !== step));
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+  const uid = p => p + Math.random().toString(36).slice(2, 8);
+  const clone = o => JSON.parse(JSON.stringify(o));
+  const TYPE_LABEL = { single: "하나 선택", multi: "복수 선택", text: "서술형" };
+  const isChoice = t => t === "single" || t === "multi";
 
   async function rpc(fn, body) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
@@ -385,24 +360,159 @@
     });
     const text = await res.text();
     if (!res.ok) {
-      let detail = text;
-      try { const j = JSON.parse(text); detail = j.message || j.hint || text; } catch (_) {}
-      throw new Error(`${res.status} ${String(detail).slice(0, 120)}`);
+      let d = text; try { const j = JSON.parse(text); d = j.message || j.hint || text; } catch (_) {}
+      throw new Error(`${res.status} ${String(d).slice(0, 120)}`);
     }
     return JSON.parse(text);
   }
-
-  function setMsg(el, text, kind) {
-    el.textContent = text || "";
-    el.className = "msg" + (kind ? " " + kind : "");
+  function fmtDate(iso) {
+    if (!iso) return "";
+    const p = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "numeric", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(new Date(iso));
+    const g = t => (p.find(x => x.type === t) || {}).value || "";
+    return `${g("month")}/${g("day")}(${g("weekday")}) ${g("hour")}:${g("minute")}`;
+  }
+  function setMsg(el, text, kind) { el.textContent = text || ""; el.className = (el.className.split(" ")[0]) + (kind ? " " + kind : ""); }
+  function askConfirm(title, text, okLabel = "확인") {
+    return new Promise(resolve => {
+      const m = $("confirmModal");
+      $("cmTitle").textContent = title; $("cmText").innerHTML = text; $("cmOk").textContent = okLabel;
+      const done = v => { m.classList.add("hidden"); $("cmOk").onclick = $("cmCancel").onclick = null; resolve(v); };
+      $("cmOk").onclick = () => done(true); $("cmCancel").onclick = () => done(false);
+      m.classList.remove("hidden"); $("cmOk").focus();
+    });
   }
 
-  // ---------- 1단계: 로그인 ----------
+  // ===================== 설문 설정 불러오기 =====================
+  let survey = { intro: "", is_open: true, questions: [] };
+  async function loadSurvey() {
+    const r = await rpc("ybw_get_survey", { p_survey_id: SURVEY_ID });
+    if (r.status !== "ok") throw new Error("설문을 찾을 수 없어요");
+    survey = { intro: r.intro || "", is_open: r.is_open !== false, questions: r.questions || [], updated_at: r.updated_at };
+    $("intro").textContent = survey.intro;
+    $("closedBox").classList.toggle("hidden", survey.is_open);
+    buildForm();
+  }
+
+  // ===================== 회원 설문 화면 =====================
+  const form = $("stepSurvey");
+  const steps = ["stepLogin", "stepConfirm", "stepSurvey", "stepDone"];
+  let pin = "", member = null, adminPin = null;
+
+  function show(step) {
+    steps.forEach(s => $(s).classList.toggle("hidden", s !== step));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function optsHTML(name, type, options) {
+    const short = options.length > 3 && options.every(o => (o.label || "").length <= 3);
+    const it = type === "multi" ? "checkbox" : "radio";
+    return `<div class="opts${short ? " grid" : ""}">${options.map(o =>
+      `<label class="opt"><input type="${it}" name="${esc(name)}" value="${esc(o.id)}"${o.exclusive ? ' data-exclusive="1"' : ""}><span>${esc(o.label)}</span></label>`
+    ).join("")}</div>`;
+  }
+  function hintFor(q) {
+    if (q.type !== "multi") return "";
+    return q.max ? `<b>최대 ${q.max}개</b>까지 고를 수 있어요` : "여러 개 고를 수 있어요";
+  }
+
+  function buildForm() {
+    $("qArea").innerHTML = survey.questions.map((q, i) => {
+      const req = q.required ? `<span class="req">필수</span>` : "";
+      let body = "";
+      if (isChoice(q.type)) {
+        const h = hintFor(q);
+        body += (h ? `<div class="q-hint" data-hint="${esc(q.id)}">${h}</div>` : "") + optsHTML(q.id, q.type, q.options || []);
+        if (q.follow) {
+          const f = q.follow, fh = hintFor(f);
+          body += `<div class="sub hidden" data-follow="${esc(q.id)}">
+            <div class="q-hint" data-hint="${esc(q.id)}__f">${esc(f.title)}${f.required ? ' <span class="req">필수</span>' : ""}${fh ? ` · ${fh}` : ""}</div>
+            ${isChoice(f.type) ? optsHTML(q.id + "__f", f.type, f.options || []) : `<textarea name="${esc(q.id)}__f" maxlength="1000" placeholder="${esc(f.placeholder || "")}"></textarea>`}
+          </div>`;
+        }
+        if (q.note) {
+          body += `<div class="sub"><div class="q-hint">${esc(q.note.label || "추가 의견 (선택)")}</div>
+            <textarea name="${esc(q.id)}__note" maxlength="1000" placeholder="${esc(q.note.placeholder || "")}"></textarea></div>`;
+        }
+      } else {
+        body = `<textarea name="${esc(q.id)}" maxlength="2000" placeholder="${esc(q.placeholder || "")}"></textarea>`;
+      }
+      return `<div class="q" data-q="${esc(q.id)}"><div class="q-title"><span class="num">${i + 1}.</span>${esc(q.title)}${req}</div>${body}</div>`;
+    }).join("");
+  }
+
+  function updateFollow() {
+    survey.questions.forEach(q => {
+      if (!q.follow) return;
+      const box = form.querySelector(`[data-follow="${CSS.escape(q.id)}"]`);
+      const on = [...form.querySelectorAll(`input[name="${CSS.escape(q.id)}"]:checked`)].some(i => (q.follow.when || []).includes(i.value));
+      if (box) box.classList.toggle("hidden", !on);
+    });
+  }
+  function findQ(name) {
+    const base = name.replace(/__(f|note)$/, "");
+    const q = survey.questions.find(x => x.id === base);
+    if (!q) return null;
+    return name.endsWith("__f") ? q.follow : q;
+  }
+  form.addEventListener("change", e => {
+    const t = e.target;
+    if (t.type === "checkbox" && t.name) {
+      const q = findQ(t.name);
+      const all = [...form.querySelectorAll(`input[name="${CSS.escape(t.name)}"]`)];
+      if (t.checked && t.dataset.exclusive) all.forEach(c => { if (c !== t) c.checked = false; });
+      else if (t.checked) all.forEach(c => { if (c.dataset.exclusive) c.checked = false; });
+      if (q && q.max && all.filter(c => c.checked).length > q.max) {
+        t.checked = false;
+        const h = form.querySelector(`[data-hint="${CSS.escape(t.name)}"]`);
+        if (h) { h.classList.add("flash"); setTimeout(() => h.classList.remove("flash"), 1200); }
+      }
+    }
+    updateFollow();
+  });
+
+  function pick(name, q) {
+    const ids = [...form.querySelectorAll(`input[name="${CSS.escape(name)}"]:checked`)].map(e => e.value);
+    const labels = ids.map(id => ((q.options || []).find(o => o.id === id) || {}).label || id);
+    return { ids, labels };
+  }
+  function readAnswers() {
+    const answers = {}, missing = [];
+    survey.questions.forEach((q, i) => {
+      const n = `${i + 1}번`;
+      if (isChoice(q.type)) {
+        const a = pick(q.id, q);
+        if (q.required && !a.ids.length) missing.push([q.id, n]);
+        if (q.max && a.ids.length > q.max) missing.push([q.id, `${n}(최대 ${q.max}개)`]);
+        const box = q.follow && form.querySelector(`[data-follow="${CSS.escape(q.id)}"]`);
+        if (box && !box.classList.contains("hidden")) {
+          const f = q.follow;
+          if (isChoice(f.type)) {
+            const fa = pick(q.id + "__f", f);
+            if (f.required && !fa.ids.length) missing.push([q.id, `${n} 추가 질문`]);
+            if (fa.ids.length) a.f = fa;
+          } else {
+            const ft = (form.elements[q.id + "__f"].value || "").trim();
+            if (f.required && !ft) missing.push([q.id, `${n} 추가 질문`]);
+            if (ft) a.f = { text: ft };
+          }
+        }
+        if (q.note) { const nt = (form.elements[q.id + "__note"].value || "").trim(); if (nt) a.note = nt; }
+        answers[q.id] = a;
+      } else {
+        const t = (form.elements[q.id].value || "").trim();
+        if (q.required && !t) missing.push([q.id, n]);
+        answers[q.id] = { text: t };
+      }
+    });
+    return { answers, missing };
+  }
+
+  // ---------- 로그인 ----------
   const pinEl = $("pin");
   pinEl.addEventListener("input", () => {
     pinEl.value = pinEl.value.replace(/\D/g, "").slice(0, 4);
     $("btnLogin").disabled = pinEl.value.length !== 4;
-    setMsg($("loginMsg"), ""); $("alreadyBox").classList.add("hidden");
+    setMsg($("loginMsg"), "");
   });
   pinEl.addEventListener("keydown", e => { if (e.key === "Enter" && pinEl.value.length === 4) login(); });
   $("btnLogin").addEventListener("click", login);
@@ -421,14 +531,14 @@
         setMsg(msg, "");
         show("stepConfirm");
       } else if (r.status === "already") {
-        setMsg(msg, ""); $("alreadyBox").classList.remove("hidden");
-        pinEl.value = ""; pinEl.blur();
+        setMsg(msg, ""); $("alreadyBox").classList.remove("hidden"); pinEl.value = ""; pinEl.blur();
+      } else if (r.status === "closed") {
+        setMsg(msg, "지금은 설문이 마감됐어요.", "err"); pinEl.value = "";
       } else if (r.status === "blocked") {
         setMsg(msg, "여러 번 틀려서 잠시 잠겼어요. 10분 뒤에 다시 시도해 주세요.", "err");
       } else {
         setMsg(msg, "등록된 번호가 없어요. 다시 확인하시거나 운영진에게 문의해 주세요.", "err");
-        pinEl.classList.remove("shake"); void pinEl.offsetWidth; pinEl.classList.add("shake");
-        pinEl.select();
+        pinEl.classList.remove("shake"); void pinEl.offsetWidth; pinEl.classList.add("shake"); pinEl.select();
       }
     } catch (e) {
       setMsg(msg, `연결이 원활하지 않아요. 잠시 후 다시 시도해 주세요. [${e.message}]`, "err");
@@ -437,7 +547,6 @@
     }
   }
 
-  // ---------- 2단계: 본인 확인 ----------
   $("btnNotMe").addEventListener("click", () => {
     pin = ""; member = null; adminPin = null; cred = null; pinEl.value = ""; $("btnLogin").disabled = true;
     $("btnAdminLink").classList.add("hidden"); document.body.classList.remove("has-admin");
@@ -445,94 +554,47 @@
     show("stepLogin"); pinEl.focus();
   });
   $("btnIsMe").addEventListener("click", () => {
-    if (member && member.submitted) {   // 이미 제출한 운영진
+    if (member && member.submitted) {
       $("doneName").textContent = member.name;
+      $("doneText").innerHTML = "이미 설문을 제출하셨어요.<br>참여해 주셔서 감사합니다.";
       show("stepDone"); return;
     }
-    form.reset();
-    updateConditional();
-    setMsg($("submitMsg"), "");
+    if (!survey.is_open) {
+      $("doneName").textContent = member.name;
+      $("doneText").innerHTML = "지금은 설문이 마감된 상태예요.";
+      show("stepDone"); return;
+    }
+    form.reset(); updateFollow(); setMsg($("submitMsg"), "");
     show("stepSurvey");
   });
 
-  // ---------- 3단계: 설문 ----------
-  function updateConditional() {
-    form.querySelectorAll("[data-show-if]").forEach(box => {
-      const [name, val] = box.dataset.showIf.split("=");
-      const checked = form.querySelector(`input[name="${name}"]:checked`);
-      box.classList.toggle("hidden", !(checked && checked.value === val));
-    });
-  }
-  form.addEventListener("change", e => {
-    // '특별히 없어요'와 다른 항목 동시 선택 방지
-    if (e.target.name === "regrets") {
-      const none = form.querySelector('input[name="regrets"][value="없음"]');
-      if (e.target === none && none.checked) {
-        form.querySelectorAll('input[name="regrets"]').forEach(c => { if (c !== none) c.checked = false; });
-      } else if (e.target.checked) none.checked = false;
-      const picked = form.querySelectorAll('input[name="regrets"]:checked').length;
-      if (picked > 3) { e.target.checked = false; flashLimit(); }
-    }
-    updateConditional();
-  });
-
-  function flashLimit() {
-    const el = $("regretCount");
-    el.style.color = "var(--err)"; el.textContent = "3개까지만";
-    setTimeout(() => { el.style.color = ""; el.textContent = "최대 3개"; }, 1500);
-  }
-
-  function readForm() {
-    const fd = new FormData(form);
-    const one = k => (fd.get(k) || "").toString().trim();
-    const many = k => fd.getAll(k).map(String);
-    const a = {
-      continue: one("continue"),
-      regrets: many("regrets"),
-      regret_detail: one("regret_detail"),
-      day: one("day"),
-      day_wish: one("day") === "변경 희망" ? many("day_wish") : [],
-      comment: one("comment")
-    };
-    return a;
-  }
-
-
-  function validate(a) {
-    const missing = [];
-    if (!a.continue) missing.push(["continue", "1번"]);
-    if (a.regrets.length > 3) missing.push(["regrets", "2번(최대 3개)"]);
-    if (!a.day) missing.push(["day", "3번"]);
-    else if (a.day === "변경 희망" && !a.day_wish.length) missing.push(["day", "3번 희망 요일"]);
-    return missing;
-  }
-
+  // ---------- 제출 ----------
   form.addEventListener("submit", async e => {
     e.preventDefault();
     const msg = $("submitMsg"), btn = $("btnSubmit");
-    const a = readForm();
-    const missing = validate(a);
+    const { answers, missing } = readAnswers();
     if (missing.length) {
-      setMsg(msg, `${missing.map(m => m[1]).join(", ")} 항목을 선택해 주세요.`, "err");
-      form.querySelector(`[data-q="${missing[0][0]}"]`).scrollIntoView({ behavior: "smooth", block: "center" });
+      setMsg(msg, `${[...new Set(missing.map(m => m[1]))].join(", ")} 항목을 확인해 주세요.`, "err");
+      form.querySelector(`[data-q="${CSS.escape(missing[0][0])}"]`).scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     setMsg(msg, "");
-    if (!(await askConfirm())) return;
+    if (!(await askConfirm("이대로 제출할까요?", "한 번 제출하면 <b>수정하거나 다시 제출할 수 없어요.</b><br>답변을 한 번 더 확인해 주세요.", "제출하기"))) return;
     btn.disabled = true; setMsg(msg, "제출 중…");
     let finished = false;
     try {
-      const r = await rpc("ybw_submit", { p_last4: pin, p_answers: a, p_survey_id: SURVEY_ID });
+      const r = await rpc("ybw_submit", { p_last4: pin, p_answers: answers, p_survey_id: SURVEY_ID });
       if (r.status === "ok") {
-        finished = true;
+        finished = true; member.submitted = true;
         $("doneName").textContent = member.name;
+        $("doneText").innerHTML = "소중한 의견 잘 받았어요.<br>모임이 더 즐거워지도록 운영진이 꼼꼼히 살펴볼게요.";
         pin = ""; pinEl.value = "";
         show("stepDone");
       } else if (r.status === "already") {
-        finished = true;
-        pin = ""; pinEl.value = ""; $("btnLogin").disabled = true;
-        $("alreadyBox").classList.remove("hidden");
-        show("stepLogin");
+        finished = true; pin = ""; pinEl.value = ""; $("btnLogin").disabled = true;
+        $("alreadyBox").classList.remove("hidden"); show("stepLogin");
+      } else if (r.status === "closed") {
+        setMsg(msg, "방금 설문이 마감돼서 제출할 수 없어요.", "err");
       } else if (r.status === "blocked") {
         setMsg(msg, "잠시 잠겼어요. 10분 뒤에 다시 제출해 주세요.", "err");
       } else {
@@ -545,66 +607,29 @@
     }
   });
 
-  function askConfirm() {
-    return new Promise(resolve => {
-      const m = $("confirmModal");
-      const done = v => { m.classList.add("hidden"); $("cmOk").onclick = $("cmCancel").onclick = null; resolve(v); };
-      $("cmOk").onclick = () => done(true);
-      $("cmCancel").onclick = () => done(false);
-      m.classList.remove("hidden"); $("cmOk").focus();
-    });
-  }
-
-  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-  function fmtDate(iso) {
-    if (!iso) return "";
-    const d = new Date(iso);
-    const p = new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", month: "numeric", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).formatToParts(d);
-    const g = t => (p.find(x => x.type === t) || {}).value || "";
-    return `${g("month")}/${g("day")}(${g("weekday")}) ${g("hour")}:${g("minute")}`;
-  }
-
-  // =================== 운영진 화면 ===================
+  // ===================== 운영진 =====================
   let cred = null, rows = [], filter = "all";
-
-  document.querySelectorAll("#adminView .tab").forEach(t => t.addEventListener("click", () => {
-    document.querySelectorAll("#adminView .tab").forEach(x => x.setAttribute("aria-selected", String(x === t)));
-    $("tabAll").classList.toggle("hidden", t.dataset.tab !== "all");
-    $("tabPeople").classList.toggle("hidden", t.dataset.tab !== "people");
-    $("tabQuestions").classList.toggle("hidden", t.dataset.tab !== "questions");
-    if (t.dataset.tab === "questions") renderQuestions();
-    window.scrollTo({ top: 0 });
-  }));
-  const isAdminView = () => !$("adminView").classList.contains("hidden");
 
   async function loadAdmin(pw) {
     const r = await rpc("ybw_admin_results", { p_last4: adminPin, p_password: pw, p_survey_id: SURVEY_ID });
     if (r.status !== "ok") return r.status;
     rows = (r.rows || []).map(x => ({ ...x, answers: x.answers || null }));
     $("who").textContent = `${r.admin_name} 님 · ${fmtDate(r.generated_at)} 기준`;
-    $("foot").textContent = `설문 ${r.survey_id} · 회원 ${rows.length}명`;
-    render();
+    $("aFoot").textContent = `설문 ${r.survey_id} · 회원 ${rows.length}명`;
+    renderResults();
     return "ok";
   }
-
   function openAdmin() {
-    lastStep = steps.find(s => !$(s).classList.contains("hidden")) || "stepLogin";
     steps.forEach(s => $(s).classList.add("hidden"));
     $("adminView").classList.remove("hidden");
     document.body.classList.add("admin-mode");
     $("btnAdminLink").classList.add("hidden");
     window.scrollTo({ top: 0 });
   }
-  function closeAdmin() {
-    $("adminView").classList.add("hidden");
-    document.body.classList.remove("admin-mode");
-    $("btnAdminLink").classList.remove("hidden");
-    show(lastStep);
-  }
 
   $("btnAdminLink").addEventListener("click", () => {
     if (cred) { openAdmin(); return; }
-    $("adminPw").value = ""; $("pwMsg").textContent = "";
+    $("adminPw").value = ""; setMsg($("pwMsg"), "");
     $("pwModal").classList.remove("hidden"); $("adminPw").focus();
   });
   $("pwCancel").addEventListener("click", () => $("pwModal").classList.add("hidden"));
@@ -612,183 +637,408 @@
     e.preventDefault();
     const pw = $("adminPw").value;
     if (!pw) return;
-    $("pwOk").disabled = true; $("pwMsg").textContent = "확인 중…"; $("pwMsg").className = "msg";
+    $("pwOk").disabled = true; setMsg($("pwMsg"), "확인 중…");
     try {
       const st = await loadAdmin(pw);
-      if (st === "ok") { cred = { pw }; $("pwModal").classList.add("hidden"); openAdmin(); }
-      else { $("pwMsg").className = "msg err"; $("pwMsg").textContent = st === "blocked" ? "여러 번 틀려서 10분간 잠겼어요." : "비밀번호가 맞지 않아요."; }
+      if (st === "ok") { cred = { pw }; $("pwModal").classList.add("hidden"); resetDraft(); openAdmin(); }
+      else setMsg($("pwMsg"), st === "blocked" ? "여러 번 틀려서 10분간 잠겼어요." : "비밀번호가 맞지 않아요.", "err");
     } catch (err) {
-      $("pwMsg").className = "msg err"; $("pwMsg").textContent = `연결이 원활하지 않아요. [${err.message}]`;
+      setMsg($("pwMsg"), `연결이 원활하지 않아요. [${err.message}]`, "err");
     } finally { $("pwOk").disabled = false; }
   });
-  function renderQuestions() {
-    const items = [...form.querySelectorAll(".q")].map(q => {
-      const title = q.querySelector(".q-title").cloneNode(true);
-      const req = title.querySelector(".req"); if (req) req.remove();
-      const num = (title.querySelector(".num") || {}).textContent || "";
-      const num_el = title.querySelector(".num"); if (num_el) num_el.remove();
-      const hint = q.querySelector(":scope > .q-hint");
-      const main = [...q.querySelectorAll(":scope > .opts .opt span")].map(s => s.textContent.trim());
-      const subs = [...q.querySelectorAll(":scope > .sub")].map(s => {
-        const label = (s.querySelector(".q-hint") || {}).textContent || "";
-        const opts = [...s.querySelectorAll(".opt span")].map(x => x.textContent.trim());
-        let cond = "";
-        if (s.dataset.showIf) {
-          const [n, v] = s.dataset.showIf.split("=");
-          const inp = q.querySelector(`input[name="${n}"][value="${v}"]`);
-          cond = `'${inp ? inp.nextElementSibling.textContent.trim() : v}' 선택 시 → `;
-        }
-        return `${cond}${label}${opts.length ? `: ${opts.join(", ")}` : " (서술형)"}`;
-      });
-      const kind = main.length ? (q.querySelector(':scope > .opts input[type=checkbox]') ? "복수 선택" : "하나 선택") : "서술형";
-      return `<div class="card qitem">
-        <h3><span class="num">${esc(num)}</span>${esc(title.textContent.trim())}</h3>
-        <div class="meta">${kind}${req ? " · 필수" : ""}${hint ? " · " + esc(hint.textContent.trim()) : ""}</div>
-        ${main.length ? `<ul>${main.map(o => `<li>${esc(o)}</li>`).join("")}</ul>` : ""}
-        ${subs.map(s => `<div class="follow">↳ ${esc(s)}</div>`).join("")}
-      </div>`;
-    });
-    $("tabQuestions").innerHTML = `<div class="qlist">${items.join("")}</div>`;
-  }
 
   $("btnRefresh").addEventListener("click", async () => {
+    if (dirty && !(await askConfirm("새로고침할까요?", "저장하지 않은 질문 수정 내용이 사라져요.", "새로고침"))) return;
     $("btnRefresh").disabled = true;
-    try { const st = await loadAdmin(cred.pw); if (st !== "ok") alert("다시 불러오지 못했어요. 페이지를 새로 열어 주세요."); }
-    catch (err) { alert(`연결이 원활하지 않아요. [${err.message}]`); }
+    try {
+      await loadSurvey();
+      const st = await loadAdmin(cred.pw);
+      if (st !== "ok") alert("다시 불러오지 못했어요. 페이지를 새로 열어 주세요.");
+      resetDraft();
+    } catch (err) { alert(`연결이 원활하지 않아요. [${err.message}]`); }
     finally { $("btnRefresh").disabled = false; }
   });
 
-  // 답변값 → 표시 방식
-  const CONTINUE = {
-    "계속 활동": { label: "활동할게요", cls: "good" },
-    "고민 중":   { label: "고민 중이에요", cls: "warn" },
-    "쉬고 싶음": { label: "쉬고 싶어요", cls: "bad" }
-  };
-  const REGRETS = ["게임 구성·대진","게임 수 부족·대기 시간","실력 차이","모임 요일·시간","모임 장소","분위기·친목","운영·소통","없음"];
-  const DAYS = ["월","화","목","금","토","일"];
-  const CHOICE = ["유지","변경 희망","상관없음"];
-  const CHOICE_LABEL = { day: { "유지": "수요일 유지" } };
+  document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+    const tab = t.dataset.tab;
+    document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", String(x === t)));
+    $("tabAll").classList.toggle("hidden", tab !== "all");
+    $("tabPeople").classList.toggle("hidden", tab !== "people");
+    $("tabQuestions").classList.toggle("hidden", tab !== "questions");
+    window.scrollTo({ top: 0 });
+  }));
 
-
-
-
-
-
-
-  // ---------- 화면 그리기 ----------
-
-  function render() {
-    const done = rows.filter(r => r.answers);
-    const total = rows.length, n = done.length;
-    const pct = total ? Math.round(n / total * 100) : 0;
-    $("sRate").innerHTML = `${pct}<small>%</small>`;
-    $("sBar").style.width = pct + "%";
-    $("sDone").innerHTML = `${n}<small>명</small>`;
-    $("sNone").innerHTML = `${total - n}<small>명</small>`;
-    $("nTab").textContent = `${n}/${total}`;
-    $("nAll").textContent = total; $("nDone").textContent = n;
-    $("nNone").textContent = total - n;
-    renderSummary(done);
-    renderList();
+  // ---------- 결과: 답변 해석 (예전 형식도 표시) ----------
+  function ansOf(r, q) {
+    const a = r.answers && r.answers[q.id];
+    if (a == null || a === "") return null;
+    if (typeof a === "string") return { text: a };
+    if (Array.isArray(a)) return { ids: a, labels: a };
+    return a;
   }
-
-  function count(list, getter, keys) {
-    const c = Object.fromEntries(keys.map(k => [k, 0]));
-    list.forEach(r => { [].concat(getter(r) || []).forEach(v => { if (v in c) c[v]++; else if (v) c[v] = (c[v] || 0) + 1; }); });
-    return c;
+  function labelOf(q, id, fallback) {
+    const o = ((q && q.options) || []).find(x => x.id === id);
+    return o ? o.label : `(삭제된 보기) ${fallback || id}`;
   }
-
-  function bars(counts, base, labelMap = {}) {
-    const max = Math.max(1, ...Object.values(counts));
-    return `<div class="bars">${Object.entries(counts).map(([k, v]) => {
+  function bars(entries, base) {
+    const max = Math.max(1, ...entries.map(e => e[1]));
+    return `<div class="bars">${entries.map(([label, v]) => {
       const p = base ? Math.round(v / base * 100) : 0;
-      const label = labelMap[k] || k;
       return `<div class="bar-row" title="${esc(label)}: ${v}명 (${p}%)">
         <span class="k">${esc(label)}</span>
         <span class="t"><i style="width:${(v / max * 100).toFixed(1)}%"></i></span>
         <span class="v"><b>${v}</b>명 <small>${p}%</small></span></div>`;
     }).join("")}</div>`;
   }
-
-  function renderSummary(done) {
-    const N = done.length;
-    if (!N) { $("summary").innerHTML = `<div class="card"><h3>응답 요약</h3><p class="empty">아직 응답이 없어요.</p></div>`; return; }
-    const A = r => r.answers;
-    const dayWish = done.filter(r => A(r).day === "변경 희망");
-    $("summary").innerHTML = `
-      <div class="card"><h3>계속 활동 의향</h3>${bars(count(done, r => A(r).continue, Object.keys(CONTINUE)), N, Object.fromEntries(Object.entries(CONTINUE).map(([k, v]) => [k, v.label])))}</div>
-      <div class="card"><h3>아쉬웠던 점 <span class="empty">(최대 3개)</span></h3>${bars(count(done, r => A(r).regrets, REGRETS.filter(k => k !== "없음").concat("없음")), N, { "없음": "특별히 없음" })}</div>
-      <div class="card"><h3>요일 (현재 수요일)</h3>${bars(count(done, r => A(r).day, CHOICE), N, CHOICE_LABEL.day)}
-        ${dayWish.length ? `<div class="subhead">변경 희망 ${dayWish.length}명이 원하는 요일</div>${bars(count(dayWish, r => A(r).day_wish, DAYS), dayWish.length)}` : ""}</div>`;
+  function countChoice(q, list, getter) {
+    const m = new Map((q.options || []).map(o => [o.id, [o.label, 0]]));
+    list.forEach(r => {
+      const a = getter(r); if (!a || !a.ids) return;
+      a.ids.forEach((id, k) => {
+        if (!m.has(id)) m.set(id, [labelOf(q, id, (a.labels || [])[k]), 0]);
+        m.get(id)[1]++;
+      });
+    });
+    return [...m.values()];
+  }
+  function quotes(items) {
+    return items.length
+      ? `<div class="texts">${items.map(([name, t]) => `<div class="quote"><span class="by">${esc(name)}</span>${esc(t)}</div>`).join("")}</div>`
+      : `<p class="empty">아직 작성된 내용이 없어요.</p>`;
   }
 
-  function choiceText(kind, v, wish) {
-    if (!v) return `<span class="keep">-</span>`;
-    if (v === "변경 희망") {
-      const w = Array.isArray(wish) ? wish.join(", ") : wish;
-      return `<span class="change">변경 희망${w ? `<em>${esc(w)}</em>` : ""}</span>`;
+  function renderResults() {
+    const done = rows.filter(r => r.answers);
+    const total = rows.length, n = done.length;
+    const pct = total ? Math.round(n / total * 100) : 0;
+    $("sRate").innerHTML = `${pct}<small>%</small>`; $("sBar").style.width = pct + "%";
+    $("sDone").innerHTML = `${n}<small>명</small>`; $("sNone").innerHTML = `${total - n}<small>명</small>`;
+    $("nTab").textContent = `${n}/${total}`;
+    $("nAll").textContent = total; $("nDone").textContent = n; $("nNone").textContent = total - n;
+
+    $("summary").innerHTML = !n
+      ? `<div class="card"><h3>응답 요약</h3><p class="empty">아직 응답이 없어요.</p></div>`
+      : survey.questions.map((q, i) => {
+        let html = `<div class="card"><h3><span class="num">${i + 1}.</span>${esc(q.title)}</h3>`;
+        if (isChoice(q.type)) {
+          html += bars(countChoice(q, done, r => ansOf(r, q)), n);
+          if (q.follow) {
+            const f = q.follow;
+            const who = done.filter(r => { const a = ansOf(r, q); return a && a.f; });
+            const trig = (f.when || []).map(id => labelOf(q, id)).join(", ");
+            html += `<div class="subhead">‘${esc(trig)}’ 선택 ${who.length}명 → ${esc(f.title)}</div>`;
+            html += isChoice(f.type)
+              ? (who.length ? bars(countChoice(f, who, r => ansOf(r, q).f), who.length) : `<p class="empty">아직 없어요.</p>`)
+              : quotes(who.map(r => [r.name, ansOf(r, q).f.text]).filter(x => x[1]));
+          }
+          if (q.note) {
+            const notes = done.map(r => [r.name, (ansOf(r, q) || {}).note]).filter(x => x[1]);
+            html += `<div class="subhead">${esc(q.note.label || "추가 의견")} (${notes.length}건)</div>${quotes(notes)}`;
+          }
+        } else {
+          html += quotes(done.map(r => [r.name, (ansOf(r, q) || {}).text]).filter(x => x[1]));
+        }
+        return html + `</div>`;
+      }).join("");
+    renderList();
+  }
+
+  function answerHTML(q, a) {
+    if (!a) return `<span class="dash">-</span>`;
+    let h = "";
+    if (a.ids && a.ids.length) h += a.ids.map((id, k) => `<span class="tag">${esc(labelOf(q, id, (a.labels || [])[k]).replace(/^\(삭제된 보기\) /, ""))}</span>`).join("");
+    if (a.text) h += `<div class="quote">${esc(a.text)}</div>`;
+    if (a.f) {
+      const f = q.follow || {};
+      if (a.f.ids) h += a.f.ids.map((id, k) => `<span class="tag f">${esc(((f.options || []).find(o => o.id === id) || {}).label || (a.f.labels || [])[k] || id)}</span>`).join("");
+      if (a.f.text) h += `<div class="quote">${esc(a.f.text)}</div>`;
     }
-    return `<span class="keep">${esc((CHOICE_LABEL[kind] || {})[v] || v)}</span>`;
+    if (a.note) h += `<div class="quote" style="margin-top:4px">${esc(a.note)}</div>`;
+    return h || `<span class="dash">-</span>`;
   }
-
   function memberCard(r) {
     const a = r.answers;
-    const head = `<div class="m-head">
-        <span class="m-name">${esc(r.name)}</span>${r.is_admin ? `<span class="badge">운영진</span>` : ""}
-        <span class="status ${a ? "done" : "none"}">${a ? "응답 완료" : "미응답"}</span>
-      </div>
-      <div class="m-meta">
-        <a href="tel:${esc(r.phone)}">${esc(r.phone)}</a>
-        ${a ? `<span>🕒 ${fmtDate(r.submitted_at)}</span>` : ""}
-      </div>`;
-    if (!a) return `<article class="card member">${head}</article>`;
-    const c = CONTINUE[a.continue] || { label: a.continue || "-", cls: "info" };
-    const regrets = (a.regrets || []).map(x => `<span class="tag">${esc(x === "없음" ? "특별히 없음" : x)}</span>`).join("") || `<span class="keep">-</span>`;
-    return `<article class="card member">${head}
-      <dl class="ans">
-        <dt>계속 활동</dt><dd><span class="pill ${c.cls}">${esc(c.label)}</span></dd>
-        <dt>아쉬운 점</dt><dd>${regrets}${a.regret_detail ? `<div class="quote" style="margin-top:4px">${esc(a.regret_detail)}</div>` : ""}</dd>
-        <dt>요일</dt><dd>${choiceText("day", a.day, a.day_wish)}</dd>
-        ${a.comment ? `<dt>하고 싶은 말</dt><dd><div class="quote">${esc(a.comment)}</div></dd>` : ""}
-      </dl>
+    const head = `<div class="m-head"><span class="m-name">${esc(r.name)}</span>${r.is_admin ? `<span class="badge">운영진</span>` : ""}
+        <span class="status ${a ? "done" : "none"}">${a ? "응답 완료" : "미응답"}</span></div>
+      <div class="m-meta"><a href="tel:${esc(r.phone)}">${esc(r.phone)}</a>${a ? `<span>🕒 ${fmtDate(r.submitted_at)}</span>` : ""}</div>`;
+    if (!a) return `<article class="card">${head}</article>`;
+    return `<article class="card">${head}<div class="ans">${survey.questions.map((q, i) =>
+      `<div><div class="ans-q">${i + 1}. ${esc(q.title)}</div><div class="ans-a">${answerHTML(q, ansOf(r, q))}</div></div>`).join("")}</div>
       <button class="reset" data-reset="${esc(r.name)}">응답 초기화 (본인이 다시 제출할 수 있게)</button></article>`;
   }
-
   function renderList() {
     const q = $("search").value.trim();
     let list = rows;
     if (filter === "done") list = list.filter(r => r.answers);
     if (filter === "none") list = list.filter(r => !r.answers);
     if (q) list = list.filter(r => r.name.includes(q));
-    // 응답한 사람 먼저(최근 제출 순), 미응답은 이름순
     list = [...list].sort((x, y) => (!!y.answers - !!x.answers)
       || (x.answers ? String(y.submitted_at).localeCompare(String(x.submitted_at)) : x.name.localeCompare(y.name, "ko")));
     $("list").innerHTML = list.length ? list.map(memberCard).join("") : `<p class="none-list">해당하는 회원이 없어요.</p>`;
   }
-
   document.querySelectorAll(".chip-btn").forEach(b => b.addEventListener("click", () => {
     filter = b.dataset.f;
     document.querySelectorAll(".chip-btn").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
     renderList();
   }));
   $("search").addEventListener("input", renderList);
-
   $("list").addEventListener("click", async e => {
     const b = e.target.closest("[data-reset]");
     if (!b || !cred) return;
     const name = b.dataset.reset;
-    if (!confirm(`${name} 님의 응답을 삭제할까요?\n삭제하면 ${name} 님이 처음부터 다시 제출할 수 있어요.\n(되돌릴 수 없어요)`)) return;
+    if (!(await askConfirm(`${name} 님 응답을 삭제할까요?`, `삭제하면 ${esc(name)} 님이 처음부터 다시 제출할 수 있어요.<br>(되돌릴 수 없어요)`, "삭제"))) return;
     b.disabled = true;
     try {
       const r = await rpc("ybw_admin_reset", { p_last4: adminPin, p_password: cred.pw, p_member_name: name, p_survey_id: SURVEY_ID });
       if (r.status !== "ok") throw new Error(r.status);
       await loadAdmin(cred.pw);
-    } catch (err) {
-      alert(`초기화하지 못했어요. [${err.message}]`); b.disabled = false;
-    }
+    } catch (err) { alert(`초기화하지 못했어요. [${err.message}]`); b.disabled = false; }
   });
 
+  // ===================== 질문 편집 (질문 목록 탭) =====================
+  let draft = [], draftIntro = "", dirty = false;
+  const openSet = new Set();
 
+  function resetDraft() {
+    draft = clone(survey.questions); draftIntro = survey.intro; setDirty(false);
+    renderEditor();
+  }
+  function setDirty(v) {
+    dirty = v;
+    $("btnSave").disabled = !v; $("btnRevert").disabled = !v;
+    $("edDirty").textContent = v ? "● 저장 안 됨" : "변경 없음";
+    $("edDirty").style.color = v ? "var(--err)" : "";
+  }
+  function renderOpenState() {
+    $("edState").textContent = survey.is_open ? "🟢 진행 중" : "🔴 마감됨";
+    $("edState").className = "state " + (survey.is_open ? "on" : "off");
+    $("btnToggleOpen").textContent = survey.is_open ? "설문 마감하기" : "설문 다시 열기";
+  }
+  const metaOf = q => TYPE_LABEL[q.type] + (q.type === "multi" && q.max ? ` ·최대${q.max}` : "") + (q.required ? " ·필수" : "") + (q.follow ? " ·추가질문" : "");
+
+  function optEditor(qi, scope, opts, type) {
+    return `<div class="ed-opts">${opts.map((o, oi) => `
+      <div class="ed-opt">
+        <input type="text" value="${esc(o.label)}" placeholder="보기 ${oi + 1}" data-f="opt" data-q="${qi}" data-s="${scope}" data-o="${oi}" maxlength="100">
+        ${type === "multi" ? `<label class="ex" title="이걸 고르면 다른 보기는 자동 해제"><input type="checkbox" data-f="exclusive" data-q="${qi}" data-s="${scope}" data-o="${oi}"${o.exclusive ? " checked" : ""}>단독</label>` : ""}
+        <button type="button" class="mini" data-act="upOpt" data-q="${qi}" data-s="${scope}" data-o="${oi}" ${oi === 0 ? "disabled" : ""} aria-label="위로">↑</button>
+        <button type="button" class="mini" data-act="downOpt" data-q="${qi}" data-s="${scope}" data-o="${oi}" ${oi === opts.length - 1 ? "disabled" : ""} aria-label="아래로">↓</button>
+        <button type="button" class="mini del" data-act="delOpt" data-q="${qi}" data-s="${scope}" data-o="${oi}" aria-label="삭제">✕</button>
+      </div>`).join("")}</div>
+      <button type="button" class="add-line" data-act="addOpt" data-q="${qi}" data-s="${scope}">＋ 보기 추가</button>`;
+  }
+  function typeFields(qi, scope, obj) {
+    const t = obj.type;
+    let h = `<label class="ed-label">질문 형태</label>
+      <div class="ed-row">
+        <select data-f="type" data-q="${qi}" data-s="${scope}">
+          ${["single", "multi", "text"].map(k => `<option value="${k}"${k === t ? " selected" : ""}>${TYPE_LABEL[k]}</option>`).join("")}
+        </select>
+        <label class="ed-check"><input type="checkbox" data-f="required" data-q="${qi}" data-s="${scope}"${obj.required ? " checked" : ""}>필수</label>
+      </div>`;
+    if (t === "multi") {
+      h += `<label class="ed-label">최대 선택 개수 <span class="muted">(비우면 제한 없음)</span></label>
+        <input type="number" min="1" max="20" inputmode="numeric" value="${obj.max || ""}" data-f="max" data-q="${qi}" data-s="${scope}" style="max-width:140px">`;
+    }
+    if (isChoice(t)) {
+      h += `<label class="ed-label">보기</label>` + optEditor(qi, scope, obj.options || [], t);
+    } else {
+      h += `<label class="ed-label">입력칸 안내 문구 <span class="muted">(선택)</span></label>
+        <input type="text" value="${esc(obj.placeholder || "")}" data-f="placeholder" data-q="${qi}" data-s="${scope}" maxlength="100" placeholder="예) 자유롭게 적어주세요">`;
+    }
+    return h;
+  }
+  function qEditor(q, qi) {
+    const open = openSet.has(q.id);
+    let body = "";
+    if (open) {
+      body = `<div class="ed-body">
+        <label class="ed-label">질문 내용</label>
+        <input type="text" value="${esc(q.title)}" data-f="title" data-q="${qi}" data-s="main" maxlength="200" placeholder="질문을 입력하세요">
+        ${typeFields(qi, "main", q)}`;
+      if (isChoice(q.type)) {
+        body += `<div class="ed-box">
+          <label class="ed-check"><input type="checkbox" data-f="noteOn" data-q="${qi}"${q.note ? " checked" : ""}>보기 아래에 자유 의견칸 넣기</label>
+          ${q.note ? `<label class="ed-label">의견칸 제목</label>
+            <input type="text" value="${esc(q.note.label || "")}" data-f="noteLabel" data-q="${qi}" maxlength="100" placeholder="예) 구체적으로 적어주세요 (선택)">` : ""}
+        </div>
+        <div class="ed-box">
+          <label class="ed-check"><input type="checkbox" data-f="followOn" data-q="${qi}"${q.follow ? " checked" : ""}>특정 보기를 고르면 추가 질문 보여주기</label>
+          ${q.follow ? `
+            <label class="ed-label">어떤 보기를 골랐을 때?</label>
+            <div class="whens">${(q.options || []).map(o => `<label><input type="checkbox" data-f="when" data-q="${qi}" data-id="${esc(o.id)}"${(q.follow.when || []).includes(o.id) ? " checked" : ""}>${esc(o.label || "(빈 보기)")}</label>`).join("")}</div>
+            <label class="ed-label">추가 질문 내용</label>
+            <input type="text" value="${esc(q.follow.title || "")}" data-f="title" data-q="${qi}" data-s="follow" maxlength="200" placeholder="예) 원하는 요일을 골라주세요">
+            ${typeFields(qi, "follow", q.follow)}` : ""}
+        </div>`;
+      }
+      body += `<div class="ed-actions">
+          <button type="button" class="mini" data-act="upQ" data-q="${qi}" ${qi === 0 ? "disabled" : ""}>↑ 위로</button>
+          <button type="button" class="mini" data-act="downQ" data-q="${qi}" ${qi === draft.length - 1 ? "disabled" : ""}>↓ 아래로</button>
+          <button type="button" class="mini del" data-act="delQ" data-q="${qi}">질문 삭제</button>
+        </div></div>`;
+    }
+    return `<div class="card ed-q${open ? " open" : ""}">
+      <button type="button" class="ed-head" data-act="toggle" data-q="${qi}" aria-expanded="${open}">
+        <span class="num">${qi + 1}.</span>
+        <span class="ttl${q.title ? "" : " ph"}" data-ttl="${qi}">${esc(q.title || "(질문 내용 없음)")}</span>
+        <span class="meta" data-meta="${qi}">${metaOf(q)}</span>
+        <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>${body}</div>`;
+  }
+  function renderEditor() {
+    renderOpenState();
+    $("edIntro").value = draftIntro;
+    $("edList").innerHTML = draft.map(qEditor).join("");
+  }
+
+  const target = (qi, s) => s === "follow" ? draft[qi].follow : draft[qi];
+  const newOptions = (n = 2) => Array.from({ length: n }, () => ({ id: uid("o_"), label: "" }));
+
+  $("edIntro").addEventListener("input", e => { draftIntro = e.target.value; setDirty(true); });
+
+  $("edList").addEventListener("input", e => {
+    const el = e.target, f = el.dataset.f; if (!f) return;
+    const qi = +el.dataset.q, t = target(qi, el.dataset.s);
+    if (f === "title") {
+      t.title = el.value;
+      if (el.dataset.s === "main") { const s = $("edList").querySelector(`[data-ttl="${qi}"]`); s.textContent = el.value || "(질문 내용 없음)"; s.classList.toggle("ph", !el.value); }
+    } else if (f === "opt") t.options[+el.dataset.o].label = el.value;
+    else if (f === "placeholder") t.placeholder = el.value;
+    else if (f === "max") { const v = parseInt(el.value, 10); if (v > 0) t.max = v; else delete t.max; $("edList").querySelector(`[data-meta="${qi}"]`).textContent = metaOf(draft[qi]); }
+    else if (f === "noteLabel") draft[qi].note.label = el.value;
+    else return;
+    setDirty(true);
+  });
+  $("edList").addEventListener("change", e => {
+    const el = e.target, f = el.dataset.f; if (!f) return;
+    const qi = +el.dataset.q, q = draft[qi], t = target(qi, el.dataset.s);
+    let rerender = true;
+    if (f === "type") {
+      t.type = el.value;
+      if (isChoice(t.type) && !(t.options && t.options.length)) t.options = newOptions();
+      if (t.type !== "multi") { delete t.max; (t.options || []).forEach(o => delete o.exclusive); }
+      if (!isChoice(t.type) && el.dataset.s === "main") { delete q.follow; delete q.note; }
+    } else if (f === "required") { t.required = el.checked; rerender = false; }
+    else if (f === "exclusive") { if (el.checked) t.options[+el.dataset.o].exclusive = true; else delete t.options[+el.dataset.o].exclusive; rerender = false; }
+    else if (f === "noteOn") { if (el.checked) q.note = { label: "추가 의견 (선택)" }; else delete q.note; }
+    else if (f === "followOn") { if (el.checked) q.follow = { when: [], type: "single", title: "", required: true, options: newOptions() }; else delete q.follow; }
+    else if (f === "when") {
+      const w = new Set(q.follow.when || []);
+      el.checked ? w.add(el.dataset.id) : w.delete(el.dataset.id);
+      q.follow.when = [...w]; rerender = false;
+    } else if (f !== "opt" && f !== "title" && f !== "placeholder" && f !== "max" && f !== "noteLabel") return;
+    else rerender = false;
+    setDirty(true);
+    if (rerender) renderEditor();
+    else { const m = $("edList").querySelector(`[data-meta="${qi}"]`); if (m) m.textContent = metaOf(q); }
+  });
+
+  const move = (arr, i, d) => { const j = i + d; if (j < 0 || j >= arr.length) return; [arr[i], arr[j]] = [arr[j], arr[i]]; };
+  $("tabQuestions").addEventListener("click", async e => {
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    const act = b.dataset.act, qi = +b.dataset.q, s = b.dataset.s, oi = +b.dataset.o;
+    if (act === "toggle") { const id = draft[qi].id; openSet.has(id) ? openSet.delete(id) : openSet.add(id); renderEditor(); return; }
+    if (act === "save") { save(); return; }
+    if (act === "revert") {
+      if (await askConfirm("되돌릴까요?", "저장하지 않은 수정 내용을 모두 버려요.", "되돌리기")) { resetDraft(); setMsg($("edMsg"), ""); }
+      return;
+    }
+    if (act === "addQ") {
+      const q = { id: uid("q_"), type: "single", title: "", required: false, options: newOptions() };
+      draft.push(q); openSet.add(q.id);
+      setDirty(true); renderEditor();
+      setTimeout(() => { const els = $("edList").querySelectorAll(".ed-q"); const last = els[els.length - 1]; last.scrollIntoView({ behavior: "smooth", block: "center" }); const inp = last.querySelector('[data-f="title"]'); if (inp) inp.focus(); }, 50);
+      return;
+    } else if (act === "delQ") {
+      if (!(await askConfirm("질문을 삭제할까요?", `${qi + 1}번 질문을 지워요.<br>이미 받은 답변은 결과에서 더 이상 보이지 않아요.`, "삭제"))) return;
+      draft.splice(qi, 1);
+    } else if (act === "upQ") move(draft, qi, -1);
+    else if (act === "downQ") move(draft, qi, 1);
+    else {
+      const t = target(qi, s);
+      if (act === "addOpt") t.options.push({ id: uid("o_"), label: "" });
+      else if (act === "delOpt") {
+        if (t.options.length <= 2) { alert("보기는 최소 2개가 필요해요."); return; }
+        const [rm] = t.options.splice(oi, 1);
+        if (s === "main" && draft[qi].follow) draft[qi].follow.when = (draft[qi].follow.when || []).filter(id => id !== rm.id);
+      } else if (act === "upOpt") move(t.options, oi, -1);
+      else if (act === "downOpt") move(t.options, oi, 1);
+      else return;
+    }
+    setDirty(true); renderEditor();
+  });
+
+  function cleanQuestion(q, isFollow) {
+    const c = { type: q.type, title: (q.title || "").trim(), required: !!q.required };
+    if (!isFollow) c.id = q.id;
+    if (isChoice(q.type)) {
+      c.options = (q.options || []).map(o => ({ id: o.id, label: (o.label || "").trim(), ...(q.type === "multi" && o.exclusive ? { exclusive: true } : {}) }));
+      if (q.type === "multi" && q.max) c.max = q.max;
+    } else if ((q.placeholder || "").trim()) c.placeholder = q.placeholder.trim();
+    if (!isFollow && isChoice(q.type)) {
+      if (q.note) c.note = { label: (q.note.label || "").trim() || "추가 의견 (선택)", ...(q.note.placeholder ? { placeholder: q.note.placeholder } : {}) };
+      if (q.follow) { c.follow = cleanQuestion(q.follow, true); c.follow.when = (q.follow.when || []).filter(id => c.options.some(o => o.id === id)); }
+    }
+    return c;
+  }
+  function validateDraft(qs) {
+    if (!qs.length) return "질문이 최소 1개는 있어야 해요.";
+    for (let i = 0; i < qs.length; i++) {
+      const q = qs[i], n = `${i + 1}번 질문`;
+      if (!q.title) return `${n}의 내용이 비어 있어요.`;
+      if (isChoice(q.type)) {
+        if (q.options.length < 2) return `${n}에 보기가 2개 이상 필요해요.`;
+        if (q.options.some(o => !o.label)) return `${n}에 비어 있는 보기가 있어요.`;
+        if (q.max && q.max > q.options.length) return `${n}의 최대 선택 개수가 보기 수보다 많아요.`;
+      }
+      if (q.follow) {
+        const f = q.follow;
+        if (!f.when.length) return `${n} 추가 질문: 어떤 보기를 골랐을 때 보여줄지 선택해 주세요.`;
+        if (!f.title) return `${n} 추가 질문의 내용이 비어 있어요.`;
+        if (isChoice(f.type) && (f.options.length < 2 || f.options.some(o => !o.label))) return `${n} 추가 질문의 보기를 확인해 주세요. (2개 이상, 빈칸 없이)`;
+      }
+    }
+    return "";
+  }
+  async function save() {
+    const qs = draft.map(q => cleanQuestion(q, false));
+    const err = validateDraft(qs);
+    if (err) { setMsg($("edMsg"), err, "err"); return; }
+    if (!(await askConfirm("저장할까요?", "저장하면 회원 설문 화면에 <b>바로 반영</b>돼요.", "저장하기"))) return;
+    $("btnSave").disabled = true; setMsg($("edMsg"), "저장 중…");
+    try {
+      const r = await rpc("ybw_admin_save_survey", { p_last4: adminPin, p_password: cred.pw, p_intro: draftIntro.trim(), p_questions: qs, p_survey_id: SURVEY_ID });
+      if (r.status !== "ok") throw new Error(r.status === "denied" ? "운영진 확인 실패" : r.status);
+      await loadSurvey();
+      resetDraft(); renderResults();
+      setMsg($("edMsg"), `저장했어요 ✓ (${fmtDate(r.updated_at)})`, "ok");
+    } catch (err) {
+      setMsg($("edMsg"), `저장하지 못했어요. [${err.message}]`, "err"); $("btnSave").disabled = false;
+    }
+  }
+
+  $("btnToggleOpen").addEventListener("click", async () => {
+    const next = !survey.is_open;
+    const ok = await askConfirm(next ? "설문을 다시 열까요?" : "설문을 마감할까요?",
+      next ? "회원들이 다시 설문에 참여할 수 있어요." : "마감하면 아직 제출 안 한 회원은 <b>더 이상 제출할 수 없어요.</b>", next ? "다시 열기" : "마감하기");
+    if (!ok) return;
+    $("btnToggleOpen").disabled = true;
+    try {
+      const r = await rpc("ybw_admin_set_open", { p_last4: adminPin, p_password: cred.pw, p_is_open: next, p_survey_id: SURVEY_ID });
+      if (r.status !== "ok") throw new Error(r.status);
+      survey.is_open = next; $("closedBox").classList.toggle("hidden", next); renderOpenState();
+      setMsg($("edMsg"), next ? "설문을 다시 열었어요." : "설문을 마감했어요.", "ok");
+    } catch (err) { setMsg($("edMsg"), `변경하지 못했어요. [${err.message}]`, "err"); }
+    finally { $("btnToggleOpen").disabled = false; }
+  });
+
+  window.addEventListener("beforeunload", e => { if (dirty) { e.preventDefault(); e.returnValue = ""; } });
+
+  // ===================== 시작 =====================
+  loadSurvey().catch(err => {
+    setMsg($("loginMsg"), `설문을 불러오지 못했어요. 잠시 후 새로고침해 주세요. [${err.message}]`, "err");
+  });
 })();
 </script>
 </body>
